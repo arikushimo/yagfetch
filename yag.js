@@ -1,24 +1,13 @@
 const os = require('os')
 const colors = require('colors')
-const { readFileSync } = require('fs');
-const { min } = require('moment');
+const { readFileSync } = require('fs')
+const { format } = require('date-fns')
 
-const restan = (os.totalmem() / 1024 / 1024)
-const to = (os.freemem() / 1024 / 1024)
-const calc1 = (Math.trunc(`${restan}`))
-const calc2 = (Math.trunc(`${to}`))
+const total = Math.trunc(os.totalmem() / 1024 ^ 2)
+const free = Math.trunc(os.freemem() / 1024 ^ 2)
 
-let segu = os.uptime()
-let minu = segu/60
-let horr = minu/60 
-   
-segu = Math.floor(segu)
-minu = Math.floor(minu) 
-horr = Math.floor(horr) 
+let seconds = os.uptime()
+let date = format(new Date(0).setSeconds(seconds), 'hh:mm:ss')
   
-horr = horr%60
-minu = minu%60 
-segu = segu%60
-  
- console.log(colors.magenta.bold(readFileSync('ascii.txt', 'utf8').toString()))
-console.log(` OS → ${os.version}\n Hostname → ${os.hostname}\n Kernel → ${os.release}\n Arch → ${os.arch}\n Memory → ${calc2}/${calc1}\n Uptime → ${horr}:${minu}:${segu}`.magenta.bold)
+console.log(colors.magenta.bold(readFileSync('ascii.txt', 'utf8').toString()))
+console.log(` OS → ${os.version}\n Hostname → ${os.hostname}\n Kernel → ${os.release}\n Arch → ${os.arch}\n Memory → ${free}/${total}\n Uptime → ${date}`.magenta.bold)
